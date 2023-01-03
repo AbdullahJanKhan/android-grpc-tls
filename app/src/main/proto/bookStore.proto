@@ -1,0 +1,39 @@
+syntax = 'proto3';
+
+package bookStorePackage;
+option java_multiple_files = true;
+option java_package = "org.grpc.mvn";
+
+// Our Book service definition.
+service Book {
+  rpc createBook (BookItemReq) returns (BookItem);
+  rpc readBook (BookRequest) returns (BookItem);
+  rpc readBooks (Empty) returns (BooksList);
+}
+
+// Our BookItem message definition.
+message BookItemReq {
+  string name = 1;
+  string description = 2;
+  string author = 3;
+}
+
+message BookItem {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  string author = 4;
+}
+
+// Our BookRequest message definition.
+message BookRequest {
+  int32 id = 1;
+}
+
+// Our BooksList message definition. This will be an array of BookItem.
+message BooksList {
+  repeated BookItem books = 1;
+}
+
+// the method `readBooks` does not accept any parameter so we have to specify that it is empty.
+message Empty {}

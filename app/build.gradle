@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.protobuf' version '0.8.18'
+}
+
+android {
+    namespace 'org.grpc.mvn'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "org.grpc.mvn"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.7"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.51.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+            }
+            task.plugins {
+                grpc { option 'lite' }
+            }
+        }
+    }
+}
+
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'io.grpc:grpc-okhttp:1.51.1'
+    implementation 'io.grpc:grpc-protobuf-lite:1.51.1'
+    implementation 'io.grpc:grpc-stub:1.51.1'
+    implementation 'com.squareup.okhttp3:okhttp-tls:4.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+}
