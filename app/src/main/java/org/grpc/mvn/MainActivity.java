@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,13 +16,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.grpc.mvn.databinding.ActivityMainBinding;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Arrays;
-import java.util.Collections;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -33,14 +30,8 @@ import javax.net.ssl.X509TrustManager;
 
 import io.grpc.ManagedChannel;
 import io.grpc.okhttp.OkHttpChannelBuilder;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.tls.HandshakeCertificates;
 import okhttp3.tls.HeldCertificate;
 
@@ -85,24 +76,13 @@ public class MainActivity extends AppCompatActivity {
             if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
                 throw new IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers));
             }
-            X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
             SSLContext context = SSLContext.getInstance("TLS");
             context.init(null, tmf.getTrustManagers(), null);
             SSLSocketFactory sslSocketFactory = context.getSocketFactory();
-            HeldCertificate serverhostCertificate = new HeldCertificate.Builder()
-                    .addSubjectAlternativeName("IP:129.151.80.251")
-                    .build();
-            HandshakeCertificates clientCertificates = new HandshakeCertificates.Builder()
-                    .addTrustedCertificate(serverhostCertificate.certificate())
-                    .build();
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .sslSocketFactory(sslSocketFactory, trustManager)
-                    .protocols(Arrays.asList(new Protocol[]{Protocol.HTTP_2, Protocol.HTTP_1_1}))
-                    .build();
             final ManagedChannel channel = OkHttpChannelBuilder
-                    .forAddress("129.151.80.251",8000)
+                    .forAddress("IP",PORT)
                     .useTransportSecurity()
-                    .overrideAuthority("129.151.80.251:8000")
+                    .overrideAuthority("IP:PORT")
                     .sslSocketFactory(sslSocketFactory)
                     .build();
             BookGrpc.BookBlockingStub stub = BookGrpc.newBlockingStub(channel);
@@ -110,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     .newBuilder()
                     .setName("Ok HTTP TLS")
                     .setAuthor("Abdullah Jan Khan")
-                    .setDescription("Abdullah Jan Khan OK Http TLS test. Test Round 4")
+                    .setDescription("Abdullah Jan Khan OK Http TLS test. Test Round 5. Final")
                     .build();
             BookItem response = stub.createBook(requestData);
             System.out.println(response);
