@@ -2,7 +2,7 @@
 In this repo, we are implementing an SSL connection between an Android client and a secure gRPC server 
 
 ## Find Implementation Details
-For implementation details please visit [here](https://medium.com/@abdullah-jan-khan/grpc-on-android-using-tls-5f04db4dd87e)
+[This](https://medium.com/@abdullah-jan-khan/grpc-on-android-using-tls-5f04db4dd87e) article is written to explain the functionalities of this code base along with some other theoretical explanation used in this code base.
 
 
 # Script to get certificates
