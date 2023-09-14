@@ -1,11 +1,14 @@
-# Using secure gRPC, i.e. with TLS settings 
+# Using secure gRPC with Android, i.e. with TLS settings 
 In this repo, we are implementing an SSL connection between an Android client and a secure gRPC server 
 
+## Find Implementation Details
 For implementation details please visit [here](https://medium.com/@abdullah-jan-khan/grpc-on-android-using-tls-5f04db4dd87e)
+
+
+# Script to get certificates
 
 To run the app you need to obtain a local certificate if you already do not have one.
 
-# Script to get certificates
 ```sh
 # 1. Generate CA's private key and self-signed certificate
 openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout ca-key.pem -out ca-cert.pem -subj "/C=FR/ST=Occitanie/L=Toulouse/O=Test Org/OU=Test/CN=*.test/emailAddress=test@gmail.com"
